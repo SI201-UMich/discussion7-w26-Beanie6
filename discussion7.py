@@ -37,8 +37,8 @@ def load_listings(f):
     header = next(csv_file)
 
     all_listings = []
-    listing = {}
     for row in csv_file:
+        listing = {}
         for i in range(len(header)):
             listing[header[i]] = row[i]
 
@@ -67,12 +67,13 @@ def calculate_avg_price_by_neighbourhood_group_and_room(listings):
     # for each neighborhood group and room type calculate the nightly price
     avg_price = {}
     price = {}
+
     for listing in listings:
         tup = (listing["neighbourhood_group"], listing["room_type"])
 
         if tup not in price:
             price[tup] = [0,0]
-        price[tup][0] = float(listing["price"])
+        price[tup][0] += float(listing["price"])
         price[tup][1] += 1
 
     for t in price:
@@ -104,7 +105,7 @@ def write_summary_csv(out_filename, avg_prices):
         None
             Writes a CSV file with header: neighbourhood_group, room_type, average_price
     """
-    pass
+    
 
 ###############################################################################
 ##### UNIT TESTS (Do not modify the code below!)
@@ -114,6 +115,7 @@ class TestAirbnbListings(unittest.TestCase):
         base_path = os.path.abspath(os.path.dirname(__file__))
         full_path = os.path.join(base_path, 'new_york_listings_2024.csv')
         self.listings = load_listings(full_path)
+
 
     def test_load_listings(self):
         # Test that listings were loaded successfully
