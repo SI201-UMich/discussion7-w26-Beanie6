@@ -41,7 +41,9 @@ def load_listings(f):
     for row in csv_file:
         for i in range(len(header)):
             listing[header[i]] = row[i]
-    all_listings.append(listing)
+
+        all_listings.append(listing)
+
     return all_listings
 
 ###############################################################################
@@ -62,8 +64,26 @@ def calculate_avg_price_by_neighbourhood_group_and_room(listings):
         dict mapping (neighbourhood_group, room_type) -> average_price (float)
         e.g. { ('Downtown', 'Entire home/apt'): 123.45, ... }
     """
-    pass
+    # for each neighborhood group and room type calculate the nightly price
+    avg_price = {}
+    price = {}
+    for listing in listings:
+        tup = (listing["neighbourhood_group"], listing["room_type"])
 
+        if tup not in price:
+            price[tup] = [0,0]
+        price[tup][0] = float(listing["price"])
+        price[tup][1] += 1
+
+    for t in price:
+        total = price[t][0]
+        count = price[t][1]
+
+        avg = total/count
+        avg_price[t] = avg
+
+    print(avg_price)
+    return avg_price
 
 
 ###############################################################################
