@@ -36,13 +36,13 @@ def load_listings(f):
 
     header = next(csv_file)
 
-    listings = {}
+    all_listings = []
+    listing = {}
     for row in csv_file:
         for i in range(len(header)):
-            listings[header[i]] = row[i]
-    
-    print(listings)
-    return listings
+            listing[header[i]] = row[i]
+    all_listings.append(listing)
+    return all_listings
 
 ###############################################################################
 ##### TASK 2: CALCULATION FUNCTION (single calculation)
