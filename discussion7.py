@@ -83,7 +83,6 @@ def calculate_avg_price_by_neighbourhood_group_and_room(listings):
         avg = total/count
         avg_price[t] = avg
 
-    print(avg_price)
     return avg_price
 
 
@@ -105,7 +104,15 @@ def write_summary_csv(out_filename, avg_prices):
         None
             Writes a CSV file with header: neighbourhood_group, room_type, average_price
     """
+    summary = open(out_filename, "w", newline = "") 
+    write_file = csv.writer(summary) 
+
+    write_file.writerow(["neighbourhood_group", "room_type", "average_price"])
+
+    for average in avg_prices:
+        write_file.writerow([average, avg_prices[average]])
     
+    summary.close()
 
 ###############################################################################
 ##### UNIT TESTS (Do not modify the code below!)
